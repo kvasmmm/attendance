@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Professor Dashboard</title>
+    <link rel="stylesheet" href="professor.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Local Attendance Host</h1>
+        <span id="connectionStatus" style="color: red;">● Offline</span>
+    </div>
+
+    <div id="setupSection">
+        <h2>Create New Session</h2>
+        <button class="big-btn" onclick="startSession()">Start Session</button>
+    </div>
+
+    <div id="dashboardSection">
+        <div class="info-panel">
+            <div>
+                <h3>Session PIN:</h3>
+                <div class="pin-display" id="pinDisplay">------</div>
+                <div style="margin-top: 20px;">
+                    <button class="close-btn" onclick="closeSession()">Close Session</button>
+                    <a id="exportCsv" class="export-btn" href="#" target="_blank">Export CSV</a>
+                </div>
+                
+                <div style="margin-top: 25px; padding: 15px; background: #e9ecef; border-radius: 8px;">
+                    <h4 style="margin-top: 0;">Add Student Manually</h4>
+                    <input type="text" id="manualStudentId" placeholder="2025xxxx" style="padding: 8px; width: 140px; border-radius: 4px; border: 1px solid #ccc;" maxlength="9">
+                    <button onclick="profAddStudent()" style="background: #28a745; color: white; border: none; padding: 9px 15px; border-radius: 4px; cursor: pointer;">Add</button>
+                    <div id="manualError" style="color: #dc3545; font-size: 12px; margin-top: 5px;"></div>
+                </div>
+
+            </div>
+            <div id="qrContainer" style="text-align: center;">
+                <h3 style="margin-top: 0;">Scan to join:</h3>
+                <div id="qrcode"></div>
+            </div>
+        </div>
+
+        <h3>Live Attendance Log (<span id="studentCount">0</span>)</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Time</th>
+                    <th>IP Address</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="professor.js"></script>
+</body>
+</html>

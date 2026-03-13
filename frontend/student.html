@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="student.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <title>DGIST Attendance</title>
+</head>
+<body>
+    <div class="corner-info">
+    IP: <span id="ipDisplay">Loading...</span><br>
+    UID: <span id="macDisplay">Generating...</span>
+</div>
+
+<div class="card">
+    <h2>Attendance</h2>
+    <div id="statusMessage" class="error-msg"></div>
+    <div id="successMessage" class="success-msg">✓ Attendance Submitted</div>
+
+    <input type="text" id="pinInput" placeholder="Enter 6-digit PIN" maxlength="6" pattern="[0-9]*">
+    <input type="tel" id="studentIdInput" placeholder="Student ID (e.g., 202XXXXXX)" maxlength="9" pattern="[0-9]*">
+    
+    <button id="submitBtn" onclick="submitAttendance()">Submit</button>
+    <div id="autoQrContainer" style="margin-top: 20px; text-align: center; border-top: 1px solid #ddd; padding-top: 15px;">
+        <p style="font-size: 14px; color: #555; margin-bottom: 10px; font-weight: bold;">Show this to a friend to pass it on:</p>
+        <div id="studentQrCode" style="display: inline-block; padding: 10px; background: white; border: 2px solid #eee; border-radius: 8px;"></div>
+    </div>
+</div>
+
+<script src="student.js"></script>
+</body>
+</html>

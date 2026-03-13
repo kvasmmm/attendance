@@ -1,0 +1,8 @@
+*.db
+build
+dist
+test_main.py
+logs
+venv
+.spec
+__pycache__
