@@ -149,12 +149,9 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 - **`currentPinFromUrl` hoisting bug** in `frontend/student.js` — the variable is referenced before its declaration inside the URL PIN prefill block. Functionally harmless in most browsers due to `var` hoisting, but should be cleaned up.
 - **No HTTPS** — all traffic is plain HTTP. Suitable for trusted classroom LANs only; do not expose to the public internet.
-- **Single professor session** — only one session can be active at a time across the entire app instance.
-
 ### Planned Features
 
 - [ ] HTTPS support via self-signed certificate (for stricter environments)
-- [ ] Multi-session support (parallel sessions for different groups)
 - [ ] Optional professor authentication (password-protected dashboard)
 - [ ] Student ID format configurable via `.env` file without touching source code
 - [ ] Packaged `.exe` / standalone binary for professors who don't have Python installed
