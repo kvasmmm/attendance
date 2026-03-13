@@ -175,9 +175,7 @@ pytest test_main.py
 
 ---
 
-## License & Support
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+## Support
 
 If this project saved you time, feel free to support it:
 
