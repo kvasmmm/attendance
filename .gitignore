@@ -4,5 +4,5 @@ dist
 test_main.py
 logs
 venv
-.spec
+*.spec
 __pycache__

@@ -17,7 +17,7 @@ async def submit_attendance(
     response: Response, # <-- Инжектим Response, чтобы управлять куками
     db: aiosqlite.Connection = Depends(get_db)
 ):
-    client_ip = request.client.host or "Unknown" # type: ignore
+    client_ip = check_ip(request)
     user_agent = request.headers.get("user-agent", "Unknown")[:40]
     extra_data = {'clientip': client_ip, 'useragent': user_agent}
 
@@ -43,7 +43,7 @@ async def submit_attendance(
     device_cookie = request.cookies.get(f"attendance_{session_id}")
     if device_cookie and device_cookie != data.student_id:
         logger.warning(f"Cookie bypass attempt! Tried to submit {data.student_id}, but cookie says {device_cookie}", extra=extra_data)
-        raise HTTPException(status_code=403, detail="Device block: This browser has already submitted attendance.")"
+        raise HTTPException(status_code=403, detail="Device block: This browser has already submitted attendance.")
 
     async with db.execute("SELECT student_id FROM attendance WHERE session_id = ? AND ip_address = ?", (session_id, client_ip)) as cursor:
         existing = await cursor.fetchone()
@@ -85,7 +85,7 @@ async def edit_attendance(
     data: StudentEdit, 
     db: aiosqlite.Connection = Depends(get_db)
 ):
-    client_ip = request.client.host # type: ignore
+    client_ip = check_ip(request)
     user_agent = request.headers.get("user-agent", "Unknown")[:40]
     extra_data = {'clientip': client_ip, 'useragent': user_agent}
 
@@ -120,7 +120,12 @@ async def edit_attendance(
     logger.info(f"Edit success: {data.old_student_id} -> {data.new_student_id}", extra=extra_data)
     return {"status": "success"}
 
+def check_ip(request: Request):
+    if request.client is None:
+        raise HTTPException(status_code=400, detail="Unable to determine client IP")
+    return request.client.host
+
 @router.get("/me")
 async def get_my_info(request: Request):
-    return {"ip": request.client.host}
-
+    ip = check_ip(request)
+    return {"ip": ip, "user_agent": request.headers.get("user-agent", "Unknown")[:40]}
